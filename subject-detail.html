@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subject Details - Complete Study Hub</title>
+  <link rel="icon" href="https://fav.farm/📚">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" async=""></script>
+  <style>
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.5rem;
+      background: var(--gradient);
+      color: white;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+    }
+    .back-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(108, 99, 255, 0.4);
+    }
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section-title i {
+      color: var(--accent);
+    }
+    .tutorial-grid, .book-grid, .notes-grid, .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    .tutorial-card, .book-card, .subject-card {
+      background: var(--card-bg, rgba(255, 255, 255, 0.05));
+      border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+      border-radius: 15px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      text-decoration: none;
+      display: block;
+    }
+    .tutorial-card:hover, .book-card:hover, .subject-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(108, 99, 255, 0.2);
+    }
+    .tutorial-card img, .book-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .tutorial-info, .book-info {
+      padding: 1.5rem;
+    }
+    .tutorial-info h3, .book-info h3, .subject-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .tutorial-info p, .book-info p {
+      opacity: 0.8;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    .tutorial-meta, .book-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      opacity: 0.7;
+      margin-bottom: 1rem;
+    }
+    .watch-btn, .read-btn, .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+    .watch-btn {
+      background: rgba(255, 77, 77, 0.2);
+      color: var(--primary);
+    }
+    .watch-btn:hover {
+      background: var(--primary);
+      color: white;
+    }
+    .read-btn {
+      background: rgba(0, 242, 254, 0.15);
+      color: var(--accent);
+    }
+    .read-btn:hover {
+      background: var(--accent);
+      color: var(--dark);
+    }
+    .download-btn {
+      background: rgba(39, 201, 63, 0.15);
+      color: var(--accent-green);
+    }
+    .download-btn:hover {
+      background: var(--accent-green);
+      color: white;
+    }
+    .btn-group {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .subject-header {
+      text-align: center;
+      padding: 4rem 0 2rem;
+    }
+    .subject-header h1 {
+      font-size: 3rem;
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1rem;
+    }
+    .subject-header p {
+      font-size: 1.2rem;
+      opacity: 0.8;
+    }
+    .page-content {
+      padding-top: 100px;
+      min-height: 100vh;
+    }
+    .subject-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      padding: 2rem;
+      text-align: center;
+    }
+    .subject-info {
+      padding: 1.5rem;
+    }
+    .subject-info p {
+      opacity: 0.8;
+      margin-bottom: 1rem;
+    }
+    .notes-count {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      background: rgba(0, 242, 254, 0.2);
+      color: var(--accent);
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== NAVBAR ===== -->
+  <nav>
+    <div class="container">
+      <a href="index.html" class="logo">Complete Study Hub<span>📚</span></a>
+      <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
+      <button class="theme-toggle" aria-label="Toggle dark/light mode">
+        <i class="fas fa-moon"></i>
+      </button>
+      <ul class="nav-menu">
+        <li><a href="index.html#subjects">Subjects</a></li>
+        <li><a href="index.html#notes">Notes</a></li>
+        <li><a href="https://blazemania.netlify.app/">Owner</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <div class="page-content">
+    <div class="container">
+      <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </a>
+
+      <div class="subject-header">
+        <h1 id="page-title">Select Class</h1>
+        <p id="page-subtitle">Choose your class to view available subjects</p>
+      </div>
+
+      <!-- Subjects Selection (shown when class is selected) -->
+      <div id="subjects-section" class="hidden">
+        <h2 class="section-title"><i class="fas fa-book"></i> Select Subject</h2>
+        <div class="subjects-grid" id="subjects-grid">
+          <!-- Subjects will be populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Tutorials Section -->
+      <div id="tutorials-section" class="hidden">
+        <h2 class="section-title"><i class="fas fa-play-circle"></i> Video Tutorials</h2>
+        <div class="tutorial-grid">
+          <div class="tutorial-card">
+            <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=500" alt="Tutorial">
+            <div class="tutorial-info">
+              <h3>Chapter 1: Introduction</h3>
+              <p>Basic concepts and fundamentals to get started</p>
+              <div class="tutorial-meta">
+                <span><i class="fas fa-clock"></i> 15 min</span>
+                <span><i class="fas fa-star"></i> 4.8</span>
+              </div>
+              <a href="#" class="watch-btn"><i class="fas fa-play"></i> Watch Now</a>
+            </div>
+          </div>
+          <div class="tutorial-card">
+            <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=500" alt="Tutorial">
+            <div class="tutorial-info">
+              <h3>Chapter 2: Advanced Topics</h3>
+              <p>Deep dive into advanced concepts</p>
+              <div class="tutorial-meta">
+                <span><i class="fas fa-clock"></i> 25 min</span>
+                <span><i class="fas fa-star"></i> 4.9</span>
+              </div>
+              <a href="#" class="watch-btn"><i class="fas fa-play"></i> Watch Now</a>
+            </div>
+          </div>
+          <div class="tutorial-card">
+            <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=500" alt="Tutorial">
+            <div class="tutorial-info">
+              <h3>Chapter 3: Problem Solving</h3>
+              <p>Practice problems and solutions</p>
+              <div class="tutorial-meta">
+                <span><i class="fas fa-clock"></i> 30 min</span>
+                <span><i class="fas fa-star"></i> 4.7</span>
+              </div>
+              <a href="#" class="watch-btn"><i class="fas fa-play"></i> Watch Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Books Section -->
+      <div id="books-section" class="hidden">
+        <h2 class="section-title"><i class="fas fa-book"></i> Recommended Books</h2>
+        <div class="book-grid">
+          <div class="book-card">
+            <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=500" alt="Book">
+            <div class="book-info">
+              <h3>NCERT Textbook</h3>
+              <p>Official textbook for this subject</p>
+              <div class="book-meta">
+                <span><i class="fas fa-file-pdf"></i> PDF</span>
+                <span>500 pages</span>
+              </div>
+              <div class="btn-group">
+                <a href="#" class="read-btn"><i class="fas fa-eye"></i> Read</a>
+                <a href="#" class="download-btn"><i class="fas fa-download"></i> Download</a>
+              </div>
+            </div>
+          </div>
+          <div class="book-card">
+            <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=500" alt="Book">
+            <div class="book-info">
+              <h3>Reference Book</h3>
+              <p>Additional reference material</p>
+              <div class="book-meta">
+                <span><i class="fas fa-file-pdf"></i> PDF</span>
+                <span>350 pages</span>
+              </div>
+              <div class="btn-group">
+                <a href="#" class="read-btn"><i class="fas fa-eye"></i> Read</a>
+                <a href="#" class="download-btn"><i class="fas fa-download"></i> Download</a>
+              </div>
+            </div>
+          </div>
+          <div class="book-card">
+            <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=500" alt="Book">
+            <div class="book-info">
+              <h3>Question Bank</h3>
+              <p>Practice questions and answers</p>
+              <div class="book-meta">
+                <span><i class="fas fa-file-pdf"></i> PDF</span>
+                <span>200 pages</span>
+              </div>
+              <div class="btn-group">
+                <a href="#" class="read-btn"><i class="fas fa-eye"></i> Read</a>
+                <a href="#" class="download-btn"><i class="fas fa-download"></i> Download</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes Section -->
+      <div id="notes-section" class="hidden">
+        <h2 class="section-title"><i class="fas fa-sticky-note"></i> Study Notes</h2>
+        <div class="notes-grid">
+          <div class="note-card">
+            <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=500" alt="Notes">
+            <div class="note-info">
+              <span class="note-subject" id="note-subject">Subject</span>
+              <h3>Chapter Notes</h3>
+              <div class="note-meta">
+                <span>By: Expert Tutor</span>
+                <span>Rating: 4.8★</span>
+              </div>
+              <p>Complete chapter-wise notes with formulas</p>
+              <div class="note-links">
+                <a href="#"><i class="fas fa-eye"></i> View</a>
+                <a href="#"><i class="fas fa-download"></i> Download</a>
+              </div>
+            </div>
+          </div>
+          <div class="note-card">
+            <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=500" alt="Notes">
+            <div class="note-info">
+              <span class="note-subject" id="note-subject2">Subject</span>
+              <h3>Formula Sheet</h3>
+              <div class="note-meta">
+                <span>By: Expert Tutor</span>
+                <span>Rating: 4.9★</span>
+              </div>
+              <p>All important formulas in one place</p>
+              <div class="note-links">
+                <a href="#"><i class="fas fa-eye"></i> View</a>
+                <a href="#"><i class="fas fa-download"></i> Download</a>
+              </div>
+            </div>
+          </div>
+          <div class="note-card">
+            <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=500" alt="Notes">
+            <div class="note-info">
+              <span class="note-subject" id="note-subject3">Subject</span>
+              <h3>Quick Revision</h3>
+              <div class="note-meta">
+                <span>By: Expert Tutor</span>
+                <span>Rating: 4.7★</span>
+              </div>
+              <p>Quick revision notes for exams</p>
+              <div class="note-links">
+                <a href="#"><i class="fas fa-eye"></i> View</a>
+                <a href="#"><i class="fas fa-download"></i> Download</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">
+      <p>© 2025 Complete Study Hub. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Get parameters from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const classLevel = urlParams.get('class');
+    const stream = urlParams.get('stream');
+    const subject = urlParams.get('subject');
+
+    // Subject data for School (Class 6-10)
+    const schoolSubjects = {
+      6: [
+        { name: 'Mathematics', icon: 'fa-calculator', desc: 'Algebra, Geometry, Arithmetic' },
+        { name: 'Science', icon: 'fa-flask', desc: 'Physics, Chemistry, Biology Basics' },
+        { name: 'English', icon: 'fa-book', desc: 'Grammar, Literature, Writing' },
+        { name: 'Hindi', icon: 'fa-pen', desc: 'Grammar, Literature, Composition' },
+        { name: 'Social Studies', icon: 'fa-globe', desc: 'History, Geography, Civics' },
+        { name: 'GK', icon: 'fa-lightbulb', desc: 'General Knowledge' }
+      ],
+      7: [
+        { name: 'Mathematics', icon: 'fa-calculator', desc: 'Algebra, Geometry, Arithmetic' },
+        { name: 'Science', icon: 'fa-flask', desc: 'Physics, Chemistry, Biology' },
+        { name: 'English', icon: 'fa-book', desc: 'Grammar, Literature, Writing' },
+        { name: 'Hindi', icon: 'fa-pen', desc: 'Grammar, Literature, Composition' },
+        { name: 'Social Studies', icon: 'fa-globe', desc: 'History, Geography, Civics' },
+        { name: 'GK', icon: 'fa-lightbulb', desc: 'General Knowledge' }
+      ],
+      8: [
+        { name: 'Mathematics', icon: 'fa-calculator', desc: 'Algebra, Geometry, Number System' },
+        { name: 'Science', icon: 'fa-flask', desc: 'Physics, Chemistry, Biology' },
+        { name: 'English', icon: 'fa-book', desc: 'Grammar, Literature, Writing' },
+        { name: 'Hindi', icon: 'fa-pen', desc: 'Grammar, Literature, Composition' },
+        { name: 'Social Studies', icon: 'fa-globe', desc: 'History, Geography, Civics' },
+        { name: 'Computer', icon: 'fa-laptop', desc: 'Programming, MS Office, Internet' }
+      ],
+      9: [
+        { name: 'Mathematics', icon: 'fa-calculator', desc: 'Algebra, Geometry, Coordinate Geometry' },
+        { name: 'Science', icon: 'fa-flask', desc: 'Physics, Chemistry, Biology' },
+        { name: 'English', icon: 'fa-book', desc: 'Grammar, Literature, Writing' },
+        { name: 'Hindi', icon: 'fa-pen', desc: 'Grammar, Literature, Composition' },
+        { name: 'Social Studies', icon: 'fa-globe', desc: 'History, Geography, Political Science' },
+        { name: 'ICT', icon: 'fa-computer', desc: 'Computer Fundamentals, Programming' }
+      ],
+      10: [
+        { name: 'Mathematics', icon: 'fa-calculator', desc: 'Algebra, Geometry, Trigonometry' },
+        { name: 'Science', icon: 'fa-flask', desc: 'Physics, Chemistry, Biology' },
+        { name: 'English', icon: 'fa-book', desc: 'Grammar, Literature, Writing' },
+        { name: 'Hindi', icon: 'fa-pen', desc: 'Grammar, Literature, Composition' },
+        { name: 'Social Studies', icon: 'fa-globe', desc: 'History, Geography, Economics' },
+        { name: 'ICT', icon: 'fa-computer', desc: 'Computer Applications, Programming' }
+      ]
+    };
+
+    // Stream data for Class 11-12
+    const streams = {
+      11: [
+        { name: 'Physics', icon: 'fa-atom', desc: 'Mechanics, Thermodynamics, Waves' },
+        { name: 'Chemistry', icon: 'fa-flask', desc: 'Physical, Organic, Inorganic Chemistry' },
+        { name: 'Mathematics', icon: 'fa-square-root-alt', desc: 'Calculus, Algebra, Coordinate Geometry' },
+        { name: 'Biology', icon: 'fa-dna', desc: 'Botany, Zoology, Human Anatomy' },
+        { name: 'Commerce', icon: 'fa-calculator', desc: 'Accounts, Economics, Business' },
+        { name: 'Arts', icon: 'fa-palette', desc: 'History, Political Science, Sociology' }
+      ],
+      12: [
+        { name: 'Physics', icon: 'fa-atom', desc: 'Electronics, Optics, Modern Physics' },
+        { name: 'Chemistry', desc: 'Organic Synthesis, Thermodynamics' },
+        { name: 'Mathematics', icon: 'fa-square-root-alt', desc: 'Calculus, Algebra, Vectors' },
+        { name: 'Biology', icon: 'fa-dna', desc: 'Genetics, Ecology, Biotechnology' },
+        { name: 'Commerce', icon: 'fa-calculator', desc: 'Accounting, Finance, Marketing' },
+        { name: 'Arts', icon: 'fa-palette', desc: 'History, Political Science, Psychology' }
+      ]
+    };
+
+    // College streams
+    const collegeStreams = {
+      'Computer+Science': [
+        { name: 'Programming', icon: 'fa-code', desc: 'Python, Java, C++' },
+        { name: 'Data Science', icon: 'fa-database', desc: 'ML, AI, Data Analysis' },
+        { name: 'Web Development', icon: 'fa-globe', desc: 'HTML, CSS, JavaScript' },
+        { name: 'Database', icon: 'fa-server', desc: 'SQL, MongoDB' }
+      ],
+      'Commerce': [
+        { name: 'Financial Accounting', icon: 'fa-calculator', desc: 'Tally, Accounts' },
+        { name: 'Economics', icon: 'fa-chart-line', desc: 'Micro & Macro Economics' },
+        { name: 'Business Studies', icon: 'fa-briefcase', desc: 'Management, Marketing' }
+      ],
+      'Engineering': [
+        { name: 'Mechanical', icon: 'fa-cogs', desc: 'Thermodynamics, Mechanics' },
+        { name: 'Civil', icon: 'fa-building', desc: 'Structural, Surveying' },
+        { name: 'Electrical', icon: 'fa-bolt', desc: 'Circuits, Machines' }
+      ],
+      'Science': [
+        { name: 'Physics', icon: 'fa-atom', desc: 'Classical & Modern Physics' },
+        { name: 'Chemistry', icon: 'fa-flask', desc: 'Organic, Inorganic, Physical' },
+        { name: 'Mathematics', icon: 'fa-calculator', desc: 'Calculus, Algebra' }
+      ]
+    };
+
+    function showSubjects() {
+      const subjectsGrid = document.getElementById('subjects-grid');
+      const pageTitle = document.getElementById('page-title');
+      const pageSubtitle = document.getElementById('page-subtitle');
+      
+      let subjects = [];
+      
+      if (classLevel && classLevel >= 6 && classLevel <= 10) {
+        pageTitle.textContent = 'Class ' + classLevel;
+        pageSubtitle.textContent = 'Select a subject to view study materials';
+        subjects = schoolSubjects[classLevel] || [];
+      } else if (classLevel && classLevel >= 11 && classLevel <= 12) {
+        pageTitle.textContent = 'Class ' + classLevel + ' Stream Selection';
+        pageSubtitle.textContent = 'Select your stream to view subjects';
+        subjects = streams[classLevel] || [];
+      } else if (stream) {
+        pageTitle.textContent = stream.replace('+', ' ');
+        pageSubtitle.textContent = 'Select a subject to view study materials';
+        subjects = collegeStreams[stream] || [];
+      } else {
+        pageTitle.textContent = 'Welcome';
+        pageSubtitle.textContent = 'Select a class or stream from the home page';
+      }
+
+      subjectsGrid.innerHTML = subjects.map(sub => `
+        <a href="subject-detail.html?class=${classLevel || ''}&stream=${stream || ''}&subject=${encodeURIComponent(sub.name)}" class="subject-card">
+          <div class="subject-icon">
+            <i class="fas ${sub.icon || 'fa-book'}"></i>
+          </div>
+          <h3>${sub.name}</h3>
+          <div class="subject-info">
+            <p>${sub.desc}</p>
+            <span class="notes-count">View Materials</span>
+          </div>
+        </a>
+      `).join('');
+
+      document.getElementById('subjects-section').classList.remove('hidden');
+    }
+
+    function showSubjectContent() {
+      if (!subject) return;
+      
+      document.getElementById('page-title').textContent = subject;
+      document.getElementById('page-subtitle').textContent = 'Video tutorials, books and study notes for ' + subject;
+      
+      // Update note subjects
+      document.getElementById('note-subject').textContent = subject;
+      document.getElementById('note-subject2').textContent = subject;
+      document.getElementById('note-subject3').textContent = subject;
+      
+      // Show all content sections
+      document.getElementById('tutorials-section').classList.remove('hidden');
+      document.getElementById('books-section').classList.remove('hidden');
+      document.getElementById('notes-section').classList.remove('hidden');
+    }
+
+    // Initialize page
+    if (subject) {
+      showSubjectContent();
+    } else {
+      showSubjects();
+    }
+
+    document.title = (subject || classLevel || stream || 'Select') + ' - Complete Study Hub';
+  </script>
+</body>
+</html>

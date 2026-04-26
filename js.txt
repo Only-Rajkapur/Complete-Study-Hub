@@ -1,0 +1,175 @@
+// Mobile Menu Toggle
+const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+const navMenu = document.querySelector('.nav-menu');
+
+if (mobileMenuToggle && navMenu) {
+  mobileMenuToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+    mobileMenuToggle.innerHTML = navMenu.classList.contains('active') ? 
+      '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+  });
+}
+
+// Close menu when clicking on a link
+document.querySelectorAll('.nav-menu a').forEach(link => {
+  link.addEventListener('click', () => {
+    navMenu.classList.remove('active');
+    mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+  });
+});
+
+// Typing Animation
+const typedTextSpan = document.querySelector(".typed-text");
+const cursorSpan = document.querySelector(".cursor");
+
+if (typedTextSpan && cursorSpan) {
+  const textArray = ["Study Hub", "Knowledge Base", "Learning Community", "Note Repository", "Education Resource"];
+  const typingDelay = window.innerWidth <= 768 ? 100 : 150;
+  const erasingDelay = window.innerWidth <= 768 ? 50 : 100;
+  const newTextDelay = window.innerWidth <= 768 ? 1500 : 2000;
+  let textArrayIndex = 0;
+  let charIndex = 0;
+
+  function type() {
+    if (charIndex < textArray[textArrayIndex].length) {
+      typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+      charIndex++;
+      setTimeout(type, typingDelay);
+    } else {
+      setTimeout(erase, newTextDelay);
+    }
+  }
+
+  function erase() {
+    if (charIndex > 0) {
+      typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex-1);
+      charIndex--;
+      setTimeout(erase, erasingDelay);
+    } else {
+      textArrayIndex++;
+      if (textArrayIndex >= textArray.length) textArrayIndex = 0;
+      setTimeout(type, typingDelay + 500);
+    }
+  }
+
+  // Start typing animation when page loads
+  setTimeout(type, newTextDelay + 250);
+}
+
+// Smooth Scrolling
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href');
+    if (targetId === '#') return;
+    
+    const targetElement = document.querySelector(targetId);
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
+// Scroll progress indicator
+function setupScrollProgress() {
+  const progressBar = document.querySelector('.scroll-progress');
+  
+  window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight;
+    const clientHeight = document.documentElement.clientHeight;
+    const progress = (scrollTop / (scrollHeight - clientHeight)) * 100;
+    progressBar.style.width = `${progress}%`;
+  });
+}
+
+// Initialize all functionality when DOM is loaded
+document.addEventListener("DOMContentLoaded", function() {
+  setupScrollProgress();
+  
+  // Add scroll animation to sections
+  const sections = document.querySelectorAll('section');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate');
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+});
+
+// Simple floating animation for the hero section
+function initFloatingAnimation() {
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+
+  // Create floating elements
+  for (let i = 0; i < 15; i++) {
+    const floatingEl = document.createElement('div');
+    floatingEl.style.position = 'absolute';
+    floatingEl.style.width = '20px';
+    floatingEl.style.height = '20px';
+    floatingEl.style.background = 'rgba(108, 99, 255, 0.2)';
+    floatingEl.style.borderRadius = '50%';
+    floatingEl.style.left = Math.random() * 100 + '%';
+    floatingEl.style.top = Math.random() * 100 + '%';
+    floatingEl.style.zIndex = '1';
+    hero.appendChild(floatingEl);
+
+    // Animate the element
+    animateFloating(floatingEl);
+  }
+}
+
+function animateFloating(el) {
+  const duration = 3 + Math.random() * 4;
+  const xMovement = 50 + Math.random() * 100;
+  const yMovement = 20 + Math.random() * 50;
+  
+  el.animate([
+    { transform: 'translate(0, 0)', opacity: 0.5 },
+    { transform: `translate(${xMovement}px, ${yMovement}px)`, opacity: 0.8 }
+  ], {
+    duration: duration * 1000,
+    iterations: Infinity,
+    direction: 'alternate',
+    easing: 'ease-in-out'
+  });
+}
+
+// Initialize the floating animation
+initFloatingAnimation();
+
+// Subject info is hover-only; no click/keyboard JS required.
+
+// Theme Toggle (Dark/Light Mode)
+const themeToggle = document.querySelector('.theme-toggle');
+
+if (themeToggle) {
+  // Check for saved theme preference
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') {
+    document.body.classList.add('light-mode');
+    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+  }
+
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+    
+    // Update icon
+    const isLight = document.body.classList.contains('light-mode');
+    themeToggle.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    
+    // Save preference
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+  });
+}

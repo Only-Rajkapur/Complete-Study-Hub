@@ -1,0 +1,1394 @@
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complete Study Hub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;family=Orbitron:wght@700&amp;display=swap" rel="stylesheet">
+  <style>
+    /* ===== GLOBAL STYLES ===== */
+    :root {
+      --primary: #ff4d4d;
+      --secondary: #6c63ff;
+      --accent: #00f2fe;
+      --accent-green: #27c93f;
+      --dark: #0f0f1a;
+      --darker: #070710;
+      --light: #f8f9fa;
+      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+      --gradient-green: linear-gradient(135deg, var(--accent-green), var(--accent));
+      --gradient-text: linear-gradient(45deg, var(--primary), var(--accent));
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--dark);
+      color: var(--light);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    section {
+      padding: 6rem 0;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      background: rgba(15, 15, 26, 0.95);
+      backdrop-filter: blur(10px);
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 0;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: var(--primary);
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    nav a {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 600;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background: var(--gradient);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--light);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    /* ===== HERO SECTION ===== */
+    .hero {
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(255, 77, 77, 0.1), rgba(108, 99, 255, 0.1));
+    }
+
+    .hero .container {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      margin-bottom: 1.5rem;
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1.2;
+    }
+
+    .hero h2 {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      margin-bottom: 1rem;
+      font-weight: 400;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      opacity: 0.9;
+    }
+
+    .cta {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background: var(--gradient);
+      color: white;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+      min-width: 160px;
+      text-align: center;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(108, 99, 255, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-outline:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-green {
+      background: var(--gradient-green);
+    }
+
+    .btn-green:hover {
+      box-shadow: 0 6px 20px rgba(39, 201, 63, 0.4);
+    }
+
+    /* ===== TYPING ANIMATION ===== */
+    .typed-text {
+      color: var(--accent);
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 3px;
+      background: var(--accent);
+      margin-left: 4px;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ===== SUBJECTS SECTION ===== */
+    .subjects {
+      background-color: var(--darker);
+    }
+
+    .subjects h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 4rem;
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      justify-items: center;
+    }
+
+    .subject-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 2.5rem;
+      text-align: center;
+      transition: all 0.4s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      max-width: 350px;
+      width: 100%;
+    }
+
+    /* Collapsible info inside subject-card: hidden by default, shown on hover or when .show-info is present */
+    .subject-card {
+      cursor: pointer;
+    }
+
+    .subject-card .subject-info {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.45s ease, opacity 0.35s ease, padding 0.35s ease;
+      padding-top: 0;
+    }
+
+    /* show on hover (desktop) or when toggled via JS */
+    .subject-card:hover .subject-info,
+    .subject-card.show-info .subject-info {
+      max-height: 240px; /* enough space for paragraph and notes count */
+      opacity: 1;
+      padding-top: 1rem;
+    }
+
+    /* keep the header/title visible and slightly emphasize when open */
+    .subject-card.show-info h3 {
+      transform: translateY(-4px);
+    }
+
+    .subject-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(108, 99, 255, 0.2);
+      border-color: rgba(108, 99, 255, 0.3);
+    }
+
+    .subject-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .subject-card h3 {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .subject-card p {
+      opacity: 0.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .notes-count {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      background: rgba(0, 242, 254, 0.2);
+      color: var(--accent);
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    /* ===== NOTES SECTION ===== */
+    .notes h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 4rem;
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .notes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .note-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .note-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(108, 99, 255, 0.2);
+    }
+
+    .note-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .note-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .note-info {
+      padding: 1.5rem;
+    }
+
+    .note-info h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .note-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    .note-info p {
+      margin-bottom: 1.5rem;
+      opacity: 0.8;
+    }
+
+    .note-subject {
+      display: inline-block;
+      background: rgba(108, 99, 255, 0.2);
+      color: var(--secondary);
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .note-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .note-links a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      min-height: 44px;
+    }
+
+    /* Default pill style for all note-links buttons */
+    .note-links a {
+      background: rgba(108, 99, 255, 0.08);
+      color: var(--secondary);
+    }
+
+    /* Specific colors for the first three buttons */
+    .note-links a:nth-child(1) {
+      background: rgba(108, 99, 255, 0.2);
+      color: var(--secondary);
+    }
+
+    .note-links a:nth-child(2) {
+      background: rgba(39, 201, 63, 0.18);
+      color: var(--accent-green);
+    }
+
+    .note-links a:nth-child(3) {
+      background: rgba(0, 242, 254, 0.12);
+      color: var(--accent);
+    }
+
+    .note-links a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ===== UPLOAD SECTION ===== */
+    .upload {
+      background-color: var(--darker);
+      text-align: center;
+    }
+
+    .upload h2 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .upload p {
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      opacity: 0.8;
+    }
+
+    .upload-form {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      padding: 3rem;
+      border-radius: 15px;
+      max-width: 600px;
+      margin: 0 auto;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: left;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(0, 242, 254, 0.3);
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .file-upload {
+      border: 2px dashed rgba(255, 255, 255, 0.2);
+      padding: 2rem;
+      text-align: center;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .file-upload:hover {
+      border-color: var(--accent);
+    }
+
+    .file-upload i {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+
+    .file-upload p {
+      margin: 0;
+    }
+
+    /* ===== CONTACT SECTION ===== */
+    .contact {
+      text-align: center;
+    }
+
+    .contact h2 {
+      font-size: 2.5rem;
+      margin-bottom: 4rem;
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .contact-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      background: var(--gradient);
+      color: white;
+      box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+      min-height: 44px;
+    }
+
+    .contact-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(108, 99, 255, 0.4);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background-color: var(--darker);
+      padding: 2rem 0;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    footer .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    footer p {
+      opacity: 0.7;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .social-links a {
+      color: var(--light);
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .social-links a:hover {
+      color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    /* ===== RESPONSIVE DESIGN ===== */
+    @media (max-width: 768px) {
+      section {
+        padding: 4rem 0;
+      }
+      
+      .mobile-menu-toggle {
+        display: block;
+      }
+      
+      .nav-menu {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        flex-direction: column;
+        background: rgba(15, 15, 26, 0.95);
+        padding: 2rem;
+        transition: all 0.3s ease;
+        gap: 1.5rem;
+        align-items: center;
+      }
+      
+      .nav-menu.active {
+        left: 0;
+      }
+      
+      .hero {
+        height: auto;
+        min-height: 100vh;
+        padding: 8rem 0 4rem;
+      }
+      
+      .hero h1 {
+        font-size: 3rem;
+      }
+      
+      .hero h2 {
+        font-size: 1.5rem;
+      }
+      
+      .hero p {
+        font-size: 1rem;
+        padding: 0 1rem;
+      }
+      
+      .cta {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn {
+        width: 100%;
+        max-width: 250px;
+      }
+      
+      .subjects-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .notes-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .contact-links {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .contact-btn {
+        width: 100%;
+        max-width: 300px;
+      }
+      
+      h1, h2, h3 {
+        line-height: 1.3;
+      }
+      
+      .subjects h2, 
+      .notes h2, 
+      .upload h2, 
+      .contact h2 {
+        font-size: 2rem;
+        margin-bottom: 3rem;
+      }
+    }
+
+    /* ===== CUBE ANIMATION ===== */
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 15, 26, 0.3);
+      z-index: 1;
+    }
+
+    /* ===== SCROLL PROGRESS ===== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background: var(--gradient);
+      z-index: 1000;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+    /* ===== OPENING ANIMATION / LOADER ===== */
+    #opening-overlay {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(15,15,26,1), rgba(7,7,16,1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: all;
+    }
+
+    #opening-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .opening-inner {
+      text-align: center;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      align-items: center;
+      position: relative; /* make a stacking context so text stays above canvas */
+      z-index: 2;
+    }
+
+    .opening-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 1px;
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+      transform-origin: center;
+      animation: logo-pop 1s cubic-bezier(.2,.9,.2,1) both;
+    }
+
+    @keyframes logo-pop {
+      0% { transform: scale(0.6) translateY(6px); opacity: 0; }
+      60% { transform: scale(1.06) translateY(-4px); opacity: 1; }
+      100% { transform: scale(1) translateY(0); }
+    }
+
+    .opening-spinner {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: conic-gradient(var(--secondary), var(--primary), var(--accent));
+      filter: blur(6px) saturate(1.2);
+      animation: spin 1.2s linear infinite;
+      box-shadow: 0 8px 30px rgba(108,99,255,0.25);
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" async=""></script></head>
+<body>
+  <!-- Opening animated overlay -->
+  
+  <!-- ===== NAVBAR ===== -->
+  <nav>
+    <div class="container">
+      <a href="#" class="logo">Complete Study Hub<span>📚</span></a>
+      <button class="mobile-menu-toggle" aria-label="Toggle menu" fdprocessedid="5xlmf6">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="nav-menu">
+        <li><a href="#subjects">Subjects</a></li>
+        <li><a href="#notes">Notes</a></li>
+        <li><a href="https://blazemania.netlify.app/">Owner</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero animate">
+    <div class="container">
+      <h1>Learn. Share. Excel.</h1>
+      <h2>Your <span class="typed-text">Learning Community</span><span class="cursor">&nbsp;</span></h2>
+      <p>Access high-quality study notes for Class 6-12. Share your knowledge and ace your exams with Complete Study Hub.</p>
+      <div class="cta">
+        <a href="#notes" class="btn">Browse Notes</a>
+        <a href="#upload" class="btn btn-green">Share your thoughts</a>
+      </div>
+    </div>
+  <div style="position: absolute; width: 20px; height: 20px; background: rgba(108, 99, 255, 0.2); border-radius: 50%; left: 6.81948%; top: 93.3395%; z-index: 1;"></div><div style="position: absolute; width: 20px; height: 20px; background: rgba(108, 99, 255, 0.2); border-radius: 50%; left: 56.3128%; top: 5.47204%; z-index: 1;"></div><div style="position: absolute; width: 20px; height: 20px; background: rgba(108, 99, 255, 0.2); border-radius: 50%; left: 62.0261%; top: 91.8517%; z-index: 1;"></div><div style="position: absolute; width: 20px; height: 20px; background: rgba(108, 99, 255, 0.2); border-radius: 50%; left: 58.1658%; top: 33.2831%; z-index: 1;"></div><div style="position: absolute; width: 20px; height: 20px; background: rgba(108, 99, 255, 0.2); border-radius: 50%; left: 28.306%; top: 42.4164%; z-index: 1;"></div><div style="position: absolute; width: 20px; height: 20px; background: rgba(108, 99, 255, 0.2); border-radius: 50%; left: 3.26273%; top: 88.5543%; z-index: 1;"></div><div style="position: absolute; width: 20px; height: 20px; background: rgba(108, 99, 255, 0.2); border-radius: 50%; left: 56.7907%; top: 61.214%; z-index: 1;"></div><div style="position: absolute; width: 20px; height: 20px; background: rgba(108, 99, 255, 0.2); border-radius: 50%; left: 71.3516%; top: 68.3677%; z-index: 1;"></div><div style="position: absolute; width: 20px; height: 20px; background: rgba(108, 99, 255, 0.2); border-radius: 50%; left: 67.2685%; top: 47.512%; z-index: 1;"></div><div style="position: absolute; width: 20px; height: 20px; background: rgba(108, 99, 255, 0.2); border-radius: 50%; left: 3.32312%; top: 28.4382%; z-index: 1;"></div><div style="position: absolute; width: 20px; height: 20px; background: rgba(108, 99, 255, 0.2); border-radius: 50%; left: 24.5813%; top: 87.2763%; z-index: 1;"></div><div style="position: absolute; width: 20px; height: 20px; background: rgba(108, 99, 255, 0.2); border-radius: 50%; left: 98.2973%; top: 20.8517%; z-index: 1;"></div><div style="position: absolute; width: 20px; height: 20px; background: rgba(108, 99, 255, 0.2); border-radius: 50%; left: 30.0222%; top: 47.0482%; z-index: 1;"></div><div style="position: absolute; width: 20px; height: 20px; background: rgba(108, 99, 255, 0.2); border-radius: 50%; left: 30.7283%; top: 85.1594%; z-index: 1;"></div><div style="position: absolute; width: 20px; height: 20px; background: rgba(108, 99, 255, 0.2); border-radius: 50%; left: 13.2561%; top: 5.43369%; z-index: 1;"></div></section>
+
+  <!-- ===== SUBJECTS SECTION ===== -->
+  <section id="subjects" class="subjects">
+    <div class="container">
+      <h2>Study <span>Subjects</span></h2>
+      <div class="subjects-grid">
+        <!-- Mathematics -->
+        <div class="subject-card">
+          <div class="subject-icon">
+            <i class="fas fa-calculator"></i>
+          </div>
+          <h3>Mathematics</h3>
+          <div class="subject-info">
+            <p>Algebra, Geometry, Trigonometry, Calculus, Arithmetic for Class 6-12</p>
+            <span class="notes-count">15 notes</span>
+          </div>
+        </div>
+
+        <!-- Science -->
+        <div class="subject-card">
+          <div class="subject-icon">
+            <i class="fas fa-flask"></i>
+          </div>
+          <h3>Science</h3>
+          <div class="subject-info">
+            <p>Physics, Chemistry, Biology for Class 6-12</p>
+            <span class="notes-count">12 notes</span>
+          </div>
+        </div>
+
+        <!-- English -->
+        <div class="subject-card">
+          <div class="subject-icon">
+            <i class="fas fa-book-open"></i>
+          </div>
+          <h3>English</h3>
+          <div class="subject-info">
+            <p>Grammar, Literature, Writing, Comprehension for Class 6-12</p>
+            <span class="notes-count">10 notes</span>
+          </div>
+        </div>
+
+        <!-- Hindi -->
+        <div class="subject-card">
+          <div class="subject-icon">
+            <i class="fas fa-pen-nib"></i>
+          </div>
+          <h3>Hindi</h3>
+          <div class="subject-info">
+            <p>Grammar, Literature, Essay, Poem for Class 6-12</p>
+            <span class="notes-count">8 notes</span>
+          </div>
+        </div>
+
+        <!-- Social Science -->
+        <div class="subject-card">
+          <div class="subject-icon">
+            <i class="fas fa-globe-asia"></i>
+          </div>
+          <h3>Social Science</h3>
+          <div class="subject-info">
+            <p>History, Geography, Civics, Economics for Class 6-12</p>
+            <span class="notes-count">11 notes</span>
+          </div>
+        </div>
+
+        <!-- Computer Science -->
+        <div class="subject-card">
+          <div class="subject-icon">
+            <i class="fas fa-laptop-code"></i>
+          </div>
+          <h3>Computer</h3>
+          <div class="subject-info">
+            <p>Programming, MS Office, Internet, AI Basics for Class 6-12</p>
+            <span class="notes-count">7 notes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== NOTES SECTION ===== -->
+  <section id="notes" class="notes">
+    <div class="container">
+      <h2>Featured <span>Notes</span></h2>
+      <div class="notes-grid">
+        <!-- Mathematics Note -->
+        <div class="note-card">
+          <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Mathematics">
+          <div class="note-info">
+            <span class="note-subject">Mathematics</span>
+            <h3>Algebra Fundamentals</h3>
+            <div class="note-meta">
+              <span>By: Expert Tutor</span>
+              <span>Rating: 4.8★</span>
+            </div>
+            <p>Complete algebra guide for Class 6-10: equations, polynomials, and quadratic equations.</p>
+            <div class="note-links">
+              <a href="assets/algebra-notes.pdf" download=""><i class="fas fa-eye"></i> Notes</a>
+              <a href="assets/algebra-formulas.pdf" download=""><i class="fas fa-download"></i> Formulas</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Science Note -->
+        <div class="note-card">
+          <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Science">
+          <div class="note-info">
+            <span class="note-subject">Science</span>
+            <h3>Physics - Motion &amp; Force</h3>
+            <div class="note-meta">
+              <span>By: Science Expert</span>
+              <span>Rating: 4.7★</span>
+            </div>
+            <p>Complete physics chapter on motion, force, and Newton's laws for Class 9-10.</p>
+            <div class="note-links">
+              <a href="assets/physics-motion-notes.pdf" download=""><i class="fas fa-eye"></i> Notes</a>
+              <a href="assets/physics-formulas.pdf" download=""><i class="fas fa-download"></i> Formulas</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- English Note -->
+        <div class="note-card">
+          <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="English">
+          <div class="note-info">
+            <span class="note-subject">English</span>
+            <h3>English Grammar Complete</h3>
+            <div class="note-meta">
+              <span>By: English Master</span>
+              <span>Rating: 4.9★</span>
+            </div>
+            <p>Complete English grammar: tenses, voice, speech, and letter writing for Class 6-12.</p>
+            <div class="note-links">
+              <a href="assets/english-grammar.pdf" download=""><i class="fas fa-eye"></i> Notes</a>
+              <a href="assets/english-exercises.pdf" download=""><i class="fas fa-download"></i> Exercises</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hindi Note -->
+        <div class="note-card">
+          <img src="https://images.unsplash.com/photo-1592496001020-d31bd830651f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Hindi">
+          <div class="note-info">
+            <span class="note-subject">Hindi</span>
+            <h3>Hindi Grammar (Vyakaran)</h3>
+            <div class="note-meta">
+              <span>By: Hindi Expert</span>
+              <span>Rating: 4.6★</span>
+            </div>
+            <p>Complete Hindi grammar: sambandh, visheshan, kriya, and alekh for Class 6-12.</p>
+            <div class="note-links">
+              <a href="assets/hindi-grammar.pdf" download=""><i class="fas fa-eye"></i> Notes</a>
+              <a href="assets/hindi-vyakaran.pdf" download=""><i class="fas fa-download"></i> Vyakaran</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Science Note -->
+        <div class="note-card">
+          <img src="https://images.unsplash.com/photo-1524666643752-b381eb00effb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Social Science">
+          <div class="note-info">
+            <span class="note-subject">Social Science</span>
+            <h3>Indian History</h3>
+            <div class="note-meta">
+              <span>By: History Expert</span>
+              <span>Rating: 4.7★</span>
+            </div>
+            <p>Complete Indian history from ancient to modern times for Class 6-12.</p>
+            <div class="note-links">
+              <a href="assets/indian-history.pdf" download=""><i class="fas fa-eye"></i> Notes</a>
+              <a href="assets/history-timeline.pdf" download=""><i class="fas fa-download"></i> Timeline</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Computer Note -->
+        <div class="note-card">
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Computer">
+          <div class="note-info">
+            <span class="note-subject">Computer</span>
+            <h3>Python Programming</h3>
+            <div class="note-meta">
+              <span>By: Code Expert</span>
+              <span>Rating: 4.8★</span>
+            </div>
+            <p>Python programming from basics to advanced with examples for Class 6-12.</p>
+            <div class="note-links">
+              <a href="assets/python-notes.pdf" download=""><i class="fas fa-eye"></i> Notes</a>
+              <a href="assets/python-codes.pdf" download=""><i class="fas fa-download"></i> Codes</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== UPLOAD SECTION ===== -->
+  <section id="upload" class="upload">
+    <div class="container">
+      <h2>Share Your <span>Knowledge</span></h2>
+      <p>Publish your study notes to help other students succeed. Quality contributions earn you reputation!</p>
+      
+      <div class="upload-form">
+        <div class="form-group">
+          <label for="note-title">Note Title</label>
+          <input type="text" id="note-title" placeholder="Enter a descriptive title" fdprocessedid="l7ufv4">
+        </div>
+        
+        <div class="form-group">
+          <label for="note-subject">Subject</label>
+          <select id="note-subject" fdprocessedid="49vr2v">
+            <option value="math">Mathematics</option>
+            <option value="science">Science</option>
+            <option value="english">English</option>
+            <option value="hindi">Hindi</option>
+            <option value="sst">Social Science</option>
+            <option value="computer">Computer</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="note-description">Description</label>
+          <textarea id="note-description" placeholder="Describe what your notes cover and any key topics"></textarea>
+        </div>
+        
+        
+        <button type="submit" class="btn" style="width: 100%" fdprocessedid="ha2pe">Publish</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT SECTION ===== -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2>Get In <span>Touch</span></h2>
+      <div class="contact-links">
+        <a href="mailto:mayankomkar87@gmail.com" class="contact-btn">
+          <i class="fas fa-envelope"></i> Email Support
+        </a>
+        <a href="https://github.com/blazeforce715" class="contact-btn" target="_blank">
+          <i class="fab fa-github"></i> GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">
+    <p>© 2025 Complete Study Hub. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress"></div>
+
+  <script>
+    // Mobile Menu Toggle
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+
+    if (mobileMenuToggle && navMenu) {
+      mobileMenuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        mobileMenuToggle.innerHTML = navMenu.classList.contains('active') ? 
+          '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+      });
+    }
+
+    // Close menu when clicking on a link
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+      });
+    });
+
+    // Typing Animation
+    const typedTextSpan = document.querySelector(".typed-text");
+    const cursorSpan = document.querySelector(".cursor");
+
+    if (typedTextSpan && cursorSpan) {
+      const textArray = ["Study Hub", "Knowledge Base", "Learning Community", "Note Repository", "Education Resource"];
+      const typingDelay = window.innerWidth <= 768 ? 100 : 150;
+      const erasingDelay = window.innerWidth <= 768 ? 50 : 100;
+      const newTextDelay = window.innerWidth <= 768 ? 1500 : 2000;
+      let textArrayIndex = 0;
+      let charIndex = 0;
+
+      function type() {
+        if (charIndex < textArray[textArrayIndex].length) {
+          typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+          charIndex++;
+          setTimeout(type, typingDelay);
+        } else {
+          setTimeout(erase, newTextDelay);
+        }
+      }
+
+      function erase() {
+        if (charIndex > 0) {
+          typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex-1);
+          charIndex--;
+          setTimeout(erase, erasingDelay);
+        } else {
+          textArrayIndex++;
+          if (textArrayIndex >= textArray.length) textArrayIndex = 0;
+          setTimeout(type, typingDelay + 500);
+        }
+      }
+
+      // Start typing animation when page loads
+      setTimeout(type, newTextDelay + 250);
+    }
+
+    // Smooth Scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Scroll progress indicator
+    function setupScrollProgress() {
+      const progressBar = document.querySelector('.scroll-progress');
+      
+      window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const progress = (scrollTop / (scrollHeight - clientHeight)) * 100;
+        progressBar.style.width = `${progress}%`;
+      });
+    }
+
+    // Initialize all functionality when DOM is loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      setupScrollProgress();
+      
+      // Add scroll animation to sections
+      const sections = document.querySelectorAll('section');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate');
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+
+      sections.forEach(section => {
+        observer.observe(section);
+      });
+    });
+
+    // Simple floating animation for the hero section
+    function initFloatingAnimation() {
+      const hero = document.querySelector('.hero');
+      if (!hero) return;
+
+      // Create floating elements
+      for (let i = 0; i < 15; i++) {
+        const floatingEl = document.createElement('div');
+        floatingEl.style.position = 'absolute';
+        floatingEl.style.width = '20px';
+        floatingEl.style.height = '20px';
+        floatingEl.style.background = 'rgba(108, 99, 255, 0.2)';
+        floatingEl.style.borderRadius = '50%';
+        floatingEl.style.left = Math.random() * 100 + '%';
+        floatingEl.style.top = Math.random() * 100 + '%';
+        floatingEl.style.zIndex = '1';
+        hero.appendChild(floatingEl);
+
+        // Animate the element
+        animateFloating(floatingEl);
+      }
+    }
+
+    function animateFloating(el) {
+      const duration = 3 + Math.random() * 4;
+      const xMovement = 50 + Math.random() * 100;
+      const yMovement = 20 + Math.random() * 50;
+      
+      el.animate([
+        { transform: 'translate(0, 0)', opacity: 0.5 },
+        { transform: `translate(${xMovement}px, ${yMovement}px)`, opacity: 0.8 }
+      ], {
+        duration: duration * 1000,
+        iterations: Infinity,
+        direction: 'alternate',
+        easing: 'ease-in-out'
+      });
+    }
+
+    // Initialize the floating animation
+    initFloatingAnimation();
+
+    // Subject info is hover-only; no click/keyboard JS required.
+  </script>
+  <script>
+    // Opening overlay hide logic
+    (function() {
+      const overlay = document.getElementById('opening-overlay');
+      if (!overlay) return;
+
+      // Safety timeout in case load event doesn't fire fast
+      const MAX_SHOW = 3000; // ms
+
+      // --- Three.js cube background for overlay ---
+      let threeRenderer, threeAnimationId;
+      function loadScript(url) {
+        return new Promise((resolve, reject) => {
+          const s = document.createElement('script');
+          s.src = url;
+          s.async = true;
+          s.onload = () => resolve();
+          s.onerror = () => reject(new Error('Failed to load ' + url));
+          document.head.appendChild(s);
+        });
+      }
+
+      async function initCubes() {
+        // Try to load Three.js from CDN (fallback to no animation if fails)
+        try {
+          if (typeof THREE === 'undefined') {
+            await loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js');
+          }
+        } catch (e) {
+          // silently fail — overlay will still show spinner/logo
+          return;
+        }
+
+        const width = overlay.clientWidth;
+        const height = overlay.clientHeight;
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+        camera.position.z = 40;
+
+        threeRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        threeRenderer.setSize(width, height);
+        threeRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        threeRenderer.domElement.style.position = 'absolute';
+        threeRenderer.domElement.style.inset = '0';
+  threeRenderer.domElement.style.zIndex = '1';
+  threeRenderer.domElement.style.pointerEvents = 'none';
+  // insert canvas behind overlay content
+  overlay.insertBefore(threeRenderer.domElement, overlay.firstChild);
+
+        // ambient + subtle directional light
+        const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambient);
+        const dir = new THREE.DirectionalLight(0xffffff, 0.6);
+        dir.position.set(5, 10, 7.5);
+        scene.add(dir);
+
+        // create a group of small cubes
+        const group = new THREE.Group();
+        const geometries = [];
+        const material = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.4, metalness: 0.6 });
+
+        for (let i = 0; i < 12; i++) {
+          const size = 1 + Math.random() * 3;
+          const geo = new THREE.BoxGeometry(size, size, size);
+          const mesh = new THREE.Mesh(geo, material.clone());
+          mesh.position.x = (Math.random() - 0.5) * 30;
+          mesh.position.y = (Math.random() - 0.5) * 20;
+          mesh.position.z = (Math.random() - 0.5) * 20;
+          // subtle hue variation
+          mesh.material.color.setHSL(0.62 + Math.random() * 0.08, 0.6, 0.5);
+          group.add(mesh);
+        }
+
+        scene.add(group);
+
+        // responsive resize
+        function onResize() {
+          const w = overlay.clientWidth;
+          const h = overlay.clientHeight;
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+          threeRenderer.setSize(w, h);
+        }
+        window.addEventListener('resize', onResize);
+
+        // animate
+        const start = performance.now();
+        function animate(now) {
+          threeAnimationId = requestAnimationFrame(animate);
+          const t = (now - start) * 0.001;
+          group.rotation.x = Math.sin(t * 0.6) * 0.25;
+          group.rotation.y = t * 0.3;
+          group.children.forEach((m, idx) => {
+            m.rotation.x = t * (0.2 + idx * 0.02);
+            m.rotation.y = t * (0.25 + idx * 0.02);
+          });
+          threeRenderer.render(scene, camera);
+        }
+        animate(performance.now());
+
+        // store cleanup function
+        overlay._threeCleanup = () => {
+          cancelAnimationFrame(threeAnimationId);
+          window.removeEventListener('resize', onResize);
+          try { threeRenderer.forceContextLoss(); } catch (e) {}
+          try { threeRenderer.domElement && threeRenderer.domElement.parentNode && threeRenderer.domElement.parentNode.removeChild(threeRenderer.domElement); } catch (e) {}
+          threeRenderer = null;
+        };
+      }
+
+      // initialize cubes (non-blocking)
+      initCubes();
+
+      function hideOverlay() {
+        overlay.classList.add('hidden');
+        overlay.setAttribute('aria-hidden', 'true');
+
+        // cleanup three renderer if present
+        if (overlay._threeCleanup) {
+          try { overlay._threeCleanup(); } catch (e) { /* ignore */ }
+        }
+
+        // Remove from DOM after transition to avoid focus being trapped
+        setTimeout(() => {
+          try { overlay.parentNode && overlay.parentNode.removeChild(overlay); } catch (e) { /* ignore */ }
+        }, 700);
+      }
+
+      // Wait until window load for assets; otherwise fallback to timeout
+      if (document.readyState === 'complete') {
+        setTimeout(hideOverlay, 3000);
+      } else {
+        window.addEventListener('load', () => {
+          // Keep overlay visible for a short branded moment
+          setTimeout(hideOverlay, 3000);
+        });
+
+        // Fallback maximum display
+        setTimeout(hideOverlay, MAX_SHOW + 100); // tiny buffer
+      }
+    })();
+  </script>
+
+<span id="PING_IFRAME_FORM_DETECTION" style="display: none;"></span></body></html>
